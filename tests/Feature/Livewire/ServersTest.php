@@ -49,12 +49,12 @@ it('renders server statistics', function () {
                     (object) ['directory' => '/', 'used' => 123, 'total' => 456],
                 ]),
                 'cpu' => collect()->range(59, 1)
-                    ->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 50),
+                    ->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 50),
                 'memory' => collect()->range(59, 1)
-                    ->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 1500),
-                'updated_at' => CarbonImmutable::createFromTimestamp(now()->timestamp),
+                    ->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 1500),
+                'updated_at' => CarbonImmutable::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC')),
                 'recently_reported' => true,
             ],
         ]));
