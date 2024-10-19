@@ -31,7 +31,7 @@ trait Throttling
 
         $lastRunAt = $cache->store()->get($key);
 
-        if ($lastRunAt !== null && CarbonImmutable::createFromTimestamp($lastRunAt)->addSeconds($this->secondsUntil($interval))->isFuture()) {
+        if ($lastRunAt !== null && CarbonImmutable::createFromTimestamp($lastRunAt, config('app.timezone', 'UTC'))->addSeconds($this->secondsUntil($interval))->isFuture()) {
             return;
         }
 
