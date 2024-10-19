@@ -43,7 +43,7 @@ class Exceptions extends Card
                 return (object) [
                     'class' => $class,
                     'location' => $location,
-                    'latest' => CarbonImmutable::createFromTimestamp($row->max),
+                    'latest' => CarbonImmutable::createFromTimestamp($row->max, config('app.timezone', 'UTC')),
                     'count' => $row->count,
                 ];
             }),
