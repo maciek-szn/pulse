@@ -476,7 +476,7 @@ class DatabaseStorage implements Storage
 
         $padding = collect()
             ->range(0, 59)
-            ->mapWithKeys(fn ($i) => [CarbonImmutable::createFromTimestamp($firstBucket + $i * $secondsPerPeriod)->toDateTimeString() => null]);
+            ->mapWithKeys(fn ($i) => [CarbonImmutable::createFromTimestamp($firstBucket + $i * $secondsPerPeriod, config('app.timezone', 'UTC'))->toDateTimeString() => null]);
 
         $structure = collect($types)->mapWithKeys(fn ($type) => [$type => $padding]);
 
@@ -494,7 +494,7 @@ class DatabaseStorage implements Storage
                 ->groupBy('type')
                 ->map(fn ($readings) => $padding->merge(
                     $readings->mapWithKeys(function ($reading) {
-                        return [CarbonImmutable::createFromTimestamp($reading->bucket)->toDateTimeString() => $reading->value];
+                        return [CarbonImmutable::createFromTimestamp($reading->bucket, config('app.timezone', 'UTC'))->toDateTimeString() => $reading->value];
                     })
                 ))
             ));
