@@ -39,18 +39,18 @@ it('renders queue statistics', function () {
         ->assertViewHas('queues', collect([
             'database:default' => collect([
                 'queued' => collect()
-                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 4),
+                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 4),
                 'processing' => collect()
-                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 3),
+                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 3),
                 'processed' => collect()
-                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 2),
+                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 2),
                 'released' => collect()
-                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
-                    ->put(Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->toDateTimeString(), 1),
-                'failed' => collect()->range(59, 0)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp)->startOfMinute()->subMinutes($i)->toDateTimeString() => null]),
+                    ->range(59, 1)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null])
+                    ->put(Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->toDateTimeString(), 1),
+                'failed' => collect()->range(59, 0)->mapWithKeys(fn ($i) => [Carbon::createFromTimestamp(now()->timestamp, config('app.timezone', 'UTC'))->startOfMinute()->subMinutes($i)->toDateTimeString() => null]),
             ]),
         ]))
         ->assertViewHas('showConnection', false);
