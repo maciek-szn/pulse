@@ -44,7 +44,7 @@ class Servers extends Card
                         'memory_total' => (int) $values->memory_total,
                         'memory' => $graphs->get($slug)?->get('memory') ?? collect(),
                         'storage' => collect($values->storage), // @phpstan-ignore argument.templateType, argument.templateType
-                        'updated_at' => $updatedAt = CarbonImmutable::createFromTimestamp($system->timestamp),
+                        'updated_at' => $updatedAt = CarbonImmutable::createFromTimestamp($system->timestamp, config('app.timezone', 'UTC')),
                         'recently_reported' => $updatedAt->isAfter(now()->subSeconds(30)),
                     ];
                 })
@@ -86,6 +86,6 @@ class Servers extends Card
             ? (int) $this->ignoreAfter
             : CarbonInterval::createFromDateString($this->ignoreAfter)->totalSeconds;
 
-        return CarbonImmutable::createFromTimestamp($system->timestamp)->addSeconds($ignoreAfter)->isPast();
+        return CarbonImmutable::createFromTimestamp($system->timestamp, config('app.timezone', 'UTC'))->addSeconds($ignoreAfter)->isPast();
     }
 }
